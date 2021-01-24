@@ -6,6 +6,7 @@ var round = 1;
 var pvalue = [];
 var points = [];
 var playerNumber = 0;
+
 //Wyzerowanie punktów każdemu graczowi
 for (let i = 0; i < 4; i++) {
   points[i] = 0;
@@ -16,6 +17,7 @@ for (let i = 0; i < 4; i++) {
   isCategoryUsed[i].fill(true, 0, 13);
 }
 var throwCounter = 0;
+
 //Przypisanie dźwięków do zmiennych.
 var throws = new Audio("src/dice.wav");
 var clicks = new Audio("src/click.wav");
@@ -49,6 +51,7 @@ function Players(nr) {
   document.getElementById("players").innerHTML = text;
   document.getElementById("start").style.display = "inline";
 }
+
 //Wczytanie nicków + Odegranie animacji, Wywołanie rundy
 function Start() {
   for (let i = 0; i < playerCounter; i++) {
@@ -63,19 +66,19 @@ function Start() {
   setTimeout(() => { document.getElementById("play").style.display = "none"; RoundStart(0); }, 400);
 
 }
+
 //Rozpoczęcie rundy
 function RoundStart() {
   document.getElementById("game").innerHTML = "Runda: " + round + "  Kolejka gracza: " + playerNicknames[[playerNumber]] + "<br><br>" + '<div id="dices"></div><div id="skip"></div>';
-
   document.getElementById("skip").innerHTML = '<p onclick="ThrowingDice(' + [playerNumber] + ')">Rzuć kośćmi</p>';
-
-
 }
+
 //Pominięcie ruchu
 function SkipMyTurn() {
   throwCounter += 10;
   ThrowingDice([playerNumber]);
 }
+
 //Rzut kostką
 function ThrowingDice() {
   let is = 0;
@@ -105,6 +108,7 @@ function ThrowingDice() {
     if (throwCounter >= 3) {
       ThrowingDice();
     }
+
     //Wyświetlanie kategorii
   } else if (throwCounter >= 3) {
     let stringArrayForCategory = ["Jedynki", "Dwójki", "Trójki", "Czwórki", "Piątki", "Szóstki", "3 jednakowe", "4 jednakowe", "Full", "Mały strit", "Duży strit", "Generał (Yahtzee)", "Szansa"];
@@ -117,7 +121,6 @@ function ThrowingDice() {
     }
     document.getElementById("skip").innerHTML = text;
   }
-
 }
 
 //Zachowanie kości do gry
@@ -178,6 +181,7 @@ function chooseCategory(nr) {
 
   }
 }
+
 //Sumowanie z górnej tabelki (1-6)
 function Calculate(category) {
   Decreasing()
@@ -185,6 +189,7 @@ function Calculate(category) {
     if (pvalue[i] == category) { points[playerNumber] += category; }
   }
 }
+
 //Sumowanie (Szansa+Odwołanie od zliczania jednakowych)
 function Sum() {
   let temp = 0;
@@ -194,12 +199,14 @@ function Sum() {
   }
   return temp;
 }
+
 //Zmniejszenie zaznaczonej wartości
 function Decreasing() {
   for (let i = 0; i < 5; i++) {
     if (pvalue[i] > 7) { pvalue[i] -= 10; }
   }
 }
+
 //Zliczanie stritów i generała (Mały strit, Duży strit, Generał (Yahtzee))
 function Strike(inc, expected) {
   let count = 0;
@@ -216,6 +223,7 @@ function Strike(inc, expected) {
     return 0;
   }
 }
+
 //Zliczanie 3 i 4 tych samych (3 jednakowe i 4 jednakowe)
 function Same(expected) {
   Decreasing();
@@ -235,28 +243,28 @@ function Same(expected) {
     }
   }
   if (two == true && three == true && expected == 10) { return 25; }
-
   else { return 0; }
-
 }
+
 //Resetowanie rundy
 function Reset() {
   alert("Suma Twoich punktów: " + points[playerNumber]);
   if (playerNumber + 1 == playerCounter && round == 1) { Win(); }
   else {
-  pvalue.fill(0, 0, 5);
-  throwCounter = 0;
-  if (playerNumber + 1 == playerCounter) {
-    round++;
+    pvalue.fill(0, 0, 5);
+    throwCounter = 0;
+    if (playerNumber + 1 == playerCounter) {
+      round++;
+    }
+    if (playerNumber < playerCounter - 1) {
+      playerNumber++;
+    } else {
+      playerNumber = 0;
+    }
+    RoundStart();
   }
-  if (playerNumber < playerCounter - 1) {
-    playerNumber++;
-  } else {
-    playerNumber = 0;
-  }
-  RoundStart();
 }
-}
+
 //Wygrana
 function Win() {
   let rankingPoints = [];
@@ -284,7 +292,7 @@ function Win() {
     document.getElementById("win").innerHTML += '<p id="third"> 3. Miejsce: ' + rankingNames[2] + ' - ' + rankingPoints[2] + ' </p>';
   }
   if (soundSetting == "on") {
-  wins.play();
-  setTimeout(() => { awin.play(); }, 1600);
+    wins.play();
+    setTimeout(() => { awin.play(); }, 1600);
   }
 }
