@@ -1,0 +1,117 @@
+body {
+	background-color: #000;
+	color: lightgray;
+	font-size: 18px;
+	font-family: 'Inconsolata', monospace;
+	font-weight: 700;
+	margin: 0 !important;
+	text-align: center;
+}
+#container1 {
+	background-color: #333;
+	width: 100%;
+	padding: 15px 0 15px 0;
+	font-size: 44px;
+}
+#container1 span {
+	vertical-align: middle;
+}
+img#logo {
+	height: 60px;
+	vertical-align: middle;
+}
+p#logo {
+	margin: 0 0 0 10px;
+	padding: 0;
+	display: inline-block;
+	line-height: 46px;
+	vertical-align: middle;
+}
+#sound {
+	cursor: pointer;
+	display: inline-block;
+	margin: 0;
+}
+#play {
+	display: block;
+}
+#play p {
+	cursor: pointer;
+	display: none;
+}
+#play p:hover {
+	color: yellow;
+}
+input {
+	margin: 5px;
+	padding: 5px;
+}
+#game {
+	margin: 50px 0 0 0;
+}
+.click {
+	border: 2px solid #FF0000;
+	margin: 5px !important;
+}
+#dices {
+	height: 117px;
+}
+#dices img {
+	width: 100px;
+	margin: 7px;
+	display: inline-block;
+}
+#skip p {
+	display: inline-block;
+	margin: 15px;
+	cursor: pointer;
+}
+#skip p:hover {
+	color: yellow;
+}
+.used {
+	color: #999;
+	cursor: default !important;
+}
+.used:hover {
+	color: #999 !important;
+}
+
+#winner {
+	position: absolute;
+	font-size: 22px;
+	top: 35%;
+	left: 50%;
+	transform: translateY(-50%);
+	transform: translateX(-50%);
+}
+#second {
+	position: absolute;
+	top: 43%;
+	left: 35%;
+	transform: translateY(-50%);
+	transform: translateX(-50%);
+}
+#third {
+	position: absolute;
+	top: 43%;
+	left: 62%;
+	transform: translateY(-50%);
+	transform: translateX(-50%);
+}
+
+
+.trail {
+    width: 22%;
+    position: absolute;
+    left: 34%;
+		top: 61%;
+    z-index: -9999;
+
+}
+.cat {
+    width: 20%;
+    position: absolute;
+		left: 51%;
+		top: 57%;
+}
