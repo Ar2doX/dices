@@ -218,7 +218,7 @@ function chooseCategory(nr) {
       if (isCategoryUsed[[playerNumber]][[nr]] == true) { points[[playerNumber]] += Strike(0, 4); isCategoryUsed[[playerNumber]][[nr]] = false; Reset(); }
       break;
     case 12:
-      if (isCategoryUsed[[playerNumber]][[nr]] == true) {
+      if (isCategoryUsed[[playerNumber]][[nr]] == true) { Decreasing();
                 points[[playerNumber]] += pvalue.reduce((a, b) => a + b, 0); isCategoryUsed[[playerNumber]][[nr]] = false; Reset(); }
       break;
 
