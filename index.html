@@ -15,17 +15,20 @@
 			<p id="logo">Gra w kości Yahtzee</p>
 			<span id="sound" onclick="Sound()"><img src="src/s_on.png" alt=""></span>
 	</div>
-	<div id="container2">
-		<div id="play" class="animate__animated animate__jackInTheBox">
-			<h2>Witaj w naszej grze! Wybierz liczbę graczy:</h2>
-			<input type="radio" name="n" value="2" onclick="Players(2)"/>2
-	    <input type="radio" name="n" value="3" onclick="Players(3)"/>3
-	    <input type="radio" name="n" value="4" onclick="Players(4)"/>4
-	    <div id="players"></div>
-			<p id="start" onclick="Start()">Zacznij grę</p>
+	<div id="box1">
+		<div id="container2">
+			<div id="play" class="animate__animated animate__jackInTheBox">
+				<h2>Witaj w naszej grze! Wybierz liczbę graczy:</h2>
+				<input type="radio" name="n" value="2" onclick="Players(2)"/>2
+		    <input type="radio" name="n" value="3" onclick="Players(3)"/>3
+		    <input type="radio" name="n" value="4" onclick="Players(4)"/>4
+		    <div id="players"></div>
+				<p id="start" onclick="Start()">Zacznij grę</p>
+			</div>
+			<div id="game"></div>
 		</div>
-		<div id="game"></div>
 	</div>
+	<div id="box2"></div>
 	<div id="footer">&copy;2021 Ar2doX, MaPoMuNie, Padrino, Dekku <a href="index.html">Zagraj ponownie</a> </div>
 </body>
 </html>

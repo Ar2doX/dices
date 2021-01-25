@@ -7,6 +7,17 @@ body {
 	margin: 0 !important;
 	text-align: center;
 }
+#box1 {
+	display: inline-block;
+}
+#box2 {
+	display: none;
+	position: relative;
+	right: 0px;
+	top: 20vh;
+	vertical-align: top;
+}
+#box2 ol {text-align: left;}
 #container1 {
 	background-color: #333;
 	width: 100%;

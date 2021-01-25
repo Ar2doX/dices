@@ -4,13 +4,13 @@ var playerCounter = 2;
 var playerNicknames = [];
 var round = 1;
 var pvalue = [];
-var points = [];
+var points = Array(4);
 var playerNumber = 0;
-
+var howManyPoints = 0;
+var rankingPoints = Array(4);
+var rankingNames = Array(4);
 //Wyzerowanie punktów każdemu graczowi
-for (let i = 0; i < 4; i++) {
-  points[i] = 0;
-}
+points.fill(0,0,5);
 var isCategoryUsed = Array(4);
 for (let i = 0; i < 4; i++) {
   isCategoryUsed[i] = Array(13);
@@ -23,9 +23,24 @@ var throws = new Audio("src/dice.wav");
 var clicks = new Audio("src/click.wav");
 var wins = new Audio("src/win.mp3");
 var sons = new Audio("src/soundon.wav");
-var awin = new Audio("https://takeb1nzyto.space/assets/music/Nyanyanyanyanyanyanya!%20-%20daniwell%20(Momone%20Momo%20UTAU%20Cover).mp3")
+var awin = new Audio("https://takeb1nzyto.space/assets/music/Nyanyanyanyanyanyanya!%20-%20daniwell%20(Momone%20Momo%20UTAU%20Cover).mp3");
+var backgroundMusic = new Audio('src/background.mp3');
 awin.volume = 0.2;
-
+backgroundMusic.volume = 0.2;
+sons.volume = 0.5;
+//Zapętlony dźwięk w tle
+if (typeof backgroundMusic.loop == 'boolean')
+{
+  backgroundMusic.loop = true;
+}
+else
+{
+  backgroundMusic.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+  }, false);
+}
+backgroundMusic.play();
 //Przełącznik dźwięku
 function Sound() {
   if (soundSetting == "off") {
@@ -33,17 +48,19 @@ function Sound() {
     document.getElementById("sound").innerHTML = "<img src=\"src/s_on.png\" alt=\"\" />";
     awin.volume = 0.2;
     sons.play()
+    backgroundMusic.volume = 0.2;
   }
   else {
     awin.volume = 0;
     soundSetting = "off";
     document.getElementById("sound").innerHTML = "<img src=\"src/s_off.png\" alt=\"\" />";
+    backgroundMusic.volume = 0;
   }
 }
 
 //Wyświetlanie aktualnego gracza
 function Players(nr) {
-  var text = "";
+  let text = "";
   playerCounter = (nr);
   for (let i = 0; i < [nr]; i++) {
     text += '<input type="text" maxlength="30" size="29" id="text' + i + '"" placeholder="Nazwa gracza ' + (i + 1) + '"><br>';
@@ -63,10 +80,21 @@ function Start() {
   }
   document.getElementById("play").classList.toggle('animate__jackInTheBox');
   document.getElementById("play").classList.toggle('animate__zoomOut');
-  setTimeout(() => { document.getElementById("play").style.display = "none"; RoundStart(0); }, 400);
+  setTimeout(() => { document.getElementById("play").style.display = "none"; document.getElementById("box2").style.display = "inline-block"; document.getElementById("box1").style.width = "79vw"; document.getElementById("box2").style.width = "20vw"; RoundStart(0); }, 400);
+  Scoreboard();
 
 }
-
+//Tablica wyników
+function Scoreboard()
+{
+  var result = SortRanking();
+  let text="Tabela wyników: <ol>";
+  for (let i = 0; i < playerCounter; i++) {
+    text+='<li>'+playerNicknames[result[i]]+' - '+points[result[i]]+'</li>';
+  }
+  text+="</ol>";
+  document.getElementById("box2").innerHTML = text;
+}
 //Rozpoczęcie rundy
 function RoundStart() {
   document.getElementById("game").innerHTML = "Runda: " + round + "  Kolejka gracza: " + playerNicknames[[playerNumber]] + "<br><br>" + '<div id="dices"></div><div id="skip"></div>';
@@ -89,9 +117,9 @@ function ThrowingDice() {
       if (pvalue[i] < 7) {
         pvalue[i] = Math.floor(Math.random() * 6 + 1);
         is++;
-        text += pvalue[i] + '.jpg" alt="" onclick="Uclicks(' + i + ')">';
+        text += pvalue[i] + '.png" alt="" onclick="Uclicks(' + i + ')">';
       } else {
-        text += (pvalue[i] - 10) + '.jpg" alt="" class="click">';
+        text += (pvalue[i] - 10) + '.png" alt="" class="click">';
       }
     }
     if (throwCounter == 0) {
@@ -113,6 +141,7 @@ function ThrowingDice() {
   } else if (throwCounter >= 3) {
     let stringArrayForCategory = ["Jedynki", "Dwójki", "Trójki", "Czwórki", "Piątki", "Szóstki", "3 jednakowe", "4 jednakowe", "Full", "Mały strit", "Duży strit", "Generał (Yahtzee)", "Szansa"];
     let text = "";
+    howManyPoints = points [playerNumber];
     for (let i = 0; i < 13; i++) {
       text += '<p onclick="chooseCategory(' + i + ')"';
       if (isCategoryUsed[[playerNumber]][i] == false) { text += ' class="used"' }
@@ -176,28 +205,39 @@ function chooseCategory(nr) {
       if (isCategoryUsed[[playerNumber]][[nr]] == true) { points[[playerNumber]] += Strike(0, 4); isCategoryUsed[[playerNumber]][[nr]] = false; Reset(); }
       break;
     case 12:
-      if (isCategoryUsed[[playerNumber]][[nr]] == true) { points[[playerNumber]] += Sum(); isCategoryUsed[[playerNumber]][[nr]] = false; Reset(); }
+      if (isCategoryUsed[[playerNumber]][[nr]] == true) {
+                points[[playerNumber]] += pvalue.reduce((a, b) => a + b, 0); isCategoryUsed[[playerNumber]][[nr]] = false; Reset(); }
       break;
 
   }
 }
-
+//Sortowanie
+function SortRanking()
+{
+  for (let i = 0; i < 4; i++) {
+    rankingPoints[i] = points[i];
+    rankingNames[i] = i;
+  }
+  for (let i = 3; i >= 0; i--) {
+    for (let j = 3; j > 0; j--) {
+      if (rankingPoints[j] > rankingPoints[j - 1]) {
+        let tempPoints = rankingPoints[j];
+        rankingPoints[j] = rankingPoints[j - 1];
+        rankingPoints[j - 1] = tempPoints;
+        let tempNames = rankingNames[j];
+        rankingNames[j] = rankingNames[j - 1];
+        rankingNames[j - 1] = tempNames;
+      }
+    }
+  }
+  return rankingNames;
+}
 //Sumowanie z górnej tabelki (1-6)
 function Calculate(category) {
   Decreasing()
   for (let i = 0; i < 5; i++) {
     if (pvalue[i] == category) { points[playerNumber] += category; }
   }
-}
-
-//Sumowanie (Szansa+Odwołanie od zliczania jednakowych)
-function Sum(tempArray) {
-  let temp = 0;
-  Decreasing()
-  for (let i = 0; i < 5; i++) {
-    temp += tempArray[i];
-  }
-  return temp;
 }
 
 //Zmniejszenie zaznaczonej wartości
@@ -230,16 +270,12 @@ function Same(expected) {
   let leaver = true;
   let two = false;
   let three = false;
-  var tempArray = Array (5);
+  let tempSum = pvalue.reduce((a, b) => a + b, 0);
   for (let i = 0; i < 5; i++) {
     let count = 0;
     if (leaver == true) { //1 6 1 6 1
       if(pvalue[i]!=0){
         var container=pvalue[i];
-        }
-        for (let h = 0; h < 5; h++)
-        {
-          tempArray[h] = pvalue[h];
         }
       for (let j = 0; j < 5; j++) {
         if (container == pvalue[j]) {pvalue[j]=0; count++; }
@@ -248,7 +284,7 @@ function Same(expected) {
       }
       if (count == 3) { three = true; }
       else if (count == 2) { two = true; }
-      if (count >= expected) { return Sum(tempArray); }
+      if (count >= expected) { return tempSum; }
     }
   }
   if (two == true && three == true && expected == 10) { return 25; }
@@ -259,8 +295,8 @@ function Same(expected) {
 
 //Resetowanie rundy
 function Reset() {
-  alert("Suma Twoich punktów: " + points[playerNumber]);
-  if (playerNumber + 1 == playerCounter && round == 13) { Win(); }
+  alert("Suma Twoich punktów: " + points[playerNumber]+ " (+"+(points[playerNumber] - howManyPoints)+")"  );
+  if (playerNumber + 1 == playerCounter && round == 1) { Win(); }
   else {
     pvalue.fill(0, 0, 5);
     throwCounter = 0;
@@ -272,35 +308,21 @@ function Reset() {
     } else {
       playerNumber = 0;
     }
+    Scoreboard();
     RoundStart();
   }
 }
-
 //Wygrana
 function Win() {
   let rankingPoints = [];
   let rankingNames = Array(4);
-  for (let i = 0; i < 4; i++) {
-    rankingPoints[i] = points[i];
-    rankingNames[i] = playerNicknames[i];
-  }
-  for (let i = 3; i >= 0; i--) {
-    for (let j = 3; j > 0; j--) {
-      if (rankingPoints[j] > rankingPoints[j - 1]) {
-        var tempPoints = rankingPoints[j];
-        rankingPoints[j] = rankingPoints[j - 1];
-        rankingPoints[j - 1] = tempPoints;
-        var tempNames = rankingNames[j];
-        rankingNames[j] = rankingNames[j - 1];
-        rankingNames[j - 1] = tempNames;
-      }
-    }
-  }
+  var result = SortRanking();
   document.getElementById("container2").innerHTML = '<div id="win"></div>';
-  document.getElementById("win").innerHTML = '<p id="winner">  Wygrałeś graczu: ' + rankingNames[0] + ' zdobywajac punktów: ' + rankingPoints[0] + '</p><img class="trail" src="src/nyan-trail.gif"><img class="cat" src="src/nyan-cat.gif">'
-  document.getElementById("win").innerHTML += '<p id="second">  2. Miejsce: ' + rankingNames[1] + ' - ' + rankingPoints[1] + ' </p>';
+  document.getElementById("box2").style.display = "none";
+  document.getElementById("win").innerHTML = '<p id="winner">  Wygrałeś graczu: ' + playerNicknames[result[0]] + ' zdobywajac punktów: ' + points[result[0]] + '</p><img class="trail" src="src/nyan-trail.gif"><img class="cat" src="src/nyan-cat.gif">'
+  document.getElementById("win").innerHTML += '<p id="second">  2. Miejsce: ' + playerNicknames[result[1]] + ' - ' + points[result[1]] + ' </p>';
   if (playerCounter == 3 || playerCounter ==4) {
-    document.getElementById("win").innerHTML += '<p id="third"> 3. Miejsce: ' + rankingNames[2] + ' - ' + rankingPoints[2] + ' </p>';
+    document.getElementById("win").innerHTML += '<p id="third"> 3. Miejsce: ' + playerNicknames[result[2]] + ' - ' + points[result[2]] + ' </p>';
   }
   if (soundSetting == "on") {
     wins.play();
