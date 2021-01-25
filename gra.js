@@ -46,7 +46,6 @@ function Sound() {
   if (soundSetting == false) {
     soundSetting = true;
     document.getElementById("sound").innerHTML = "<img src=\"src/s_on.png\" alt=\"\" />";
-    awin.volume = 0.2;
     throws.volume = 0.5;
     clicks.volume = 1;
     wins.volume = 1;
@@ -55,7 +54,6 @@ function Sound() {
   else {
     soundSetting = false;
     document.getElementById("sound").innerHTML = "<img src=\"src/s_off.png\" alt=\"\" />";
-    awin.volume = 0;
     throws.volume = 0;
     clicks.volume = 0;
     wins.volume = 0;
@@ -68,10 +66,12 @@ function Music()
     musicSetting = true;
     document.getElementById("music").innerHTML = "<img src =\"src/music.png\" alt=\"\" />";
     backgroundMusic.volume = 0.2;
+    awin.volume = 0.2;
   }
   else{
     musicSetting = false;
   document.getElementById("music").innerHTML = "<img src =\"src/musicoff.png\" alt=\"\" />";
+  awin.volume = 0;
   backgroundMusic.volume = 0;
   }
 }
@@ -330,7 +330,7 @@ function Win() {
   let rankingPoints = [];
   let rankingNames = Array(4);
   var result = SortRanking();
-  backgroundMusic.stop();
+  backgroundMusic.pause();
   document.getElementById("container2").innerHTML = '<div id="win"></div>';
   document.getElementById("box2").style.display = "none";
   document.getElementById("win").innerHTML = '<p id="winner">  Wygrałeś graczu: ' + playerNicknames[result[0]] + ' zdobywajac punktów: ' + points[result[0]] + '</p><img class="trail" src="src/nyan-trail.gif"><img class="cat" src="src/nyan-cat.gif">'
