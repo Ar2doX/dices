@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+	<meta charset="utf-8"/>
+  <title>Gra w kości Yahtzee</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="shortcut icon" href="src/logo.png"/>
+	<link rel="stylesheet" href="style.css" type="text/css"/>
+	<script type="text/javascript" src="gra.js"></script>
+</head>
+<body>
+	<div id="container1">
+			<span><img id="logo" src="src/logo.png" alt=""></span>
+			<p id="logo">Gra w kości Yahtzee</p>
+			<span id="sound" class="sound" onclick="Sound()"><img src="src/s_on.png" alt=""></span>
+			<span id="music" class="sound" onclick="Music()"><img src="src/music.png" alt=""></span>
+	</div>
+	<div id="box1">
+		<div id="container2">
+			<div id="play" class="animate__animated animate__jackInTheBox">
+				<h2>Witaj w naszej grze! Wybierz liczbę graczy:</h2>
+				<input type="radio" name="n" value="2" onclick="Players(2)"/>2
+		    <input type="radio" name="n" value="3" onclick="Players(3)"/>3
+		    <input type="radio" name="n" value="4" onclick="Players(4)"/>4
+		    <div id="players"></div>
+				<p id="start" onclick="Start()">Zacznij grę</p>
+			</div>
+			<div id="game"></div>
+		</div>
+	</div>
+	<div id="box2"></div>
+	<div id="footer">&copy;2021 Ar2doX, MaPoMuNie, Padrino, Dekku <a href="index.html">Zagraj ponownie</a> </div>
+</body>
+</html>
