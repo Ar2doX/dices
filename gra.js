@@ -191,11 +191,11 @@ function Calculate(category) {
 }
 
 //Sumowanie (Szansa+Odwołanie od zliczania jednakowych)
-function Sum() {
+function Sum(tempArray) {
   let temp = 0;
   Decreasing()
   for (let i = 0; i < 5; i++) {
-    temp += pvalue[i];
+    temp += tempArray[i];
   }
   return temp;
 }
@@ -230,19 +230,25 @@ function Same(expected) {
   let leaver = true;
   let two = false;
   let three = false;
+  var tempArray = Array (5);
   for (let i = 0; i < 5; i++) {
     let count = 0;
-    if (leaver == true) {
+    if (leaver == true) { //1 6 1 6 1
       if(pvalue[i]!=0){
         var container=pvalue[i];
         }
+        for (let h = 0; h < 5; h++)
+        {
+          tempArray[h] = pvalue[h];
+        }
       for (let j = 0; j < 5; j++) {
         if (container == pvalue[j]) {pvalue[j]=0; count++; }
+        else if (container == pvalue[j]) {pvalue[j]=0; count++; }
         if (count == expected) { leaver = false; }
       }
       if (count == 3) { three = true; }
       else if (count == 2) { two = true; }
-      if (count >= expected) { return Sum(); }
+      if (count >= expected) { return Sum(tempArray); }
     }
   }
   if (two == true && three == true && expected == 10) { return 25; }
