@@ -1,5 +1,6 @@
 //Deklaracja potrzebnych zmiennych
 var soundSetting = true;
+var musicSetting = true;
 var playerCounter = 2;
 var playerNicknames = [];
 var round = 1;
@@ -40,7 +41,7 @@ else
       this.play();
   }, false);
 }
-//Przełącznik dźwięku
+//Wyłączanie/Włączanie Dźwieków
 function Sound() {
   if (soundSetting == false) {
     soundSetting = true;
@@ -49,20 +50,31 @@ function Sound() {
     throws.volume = 0.5;
     clicks.volume = 1;
     wins.volume = 1;
-    backgroundMusic.volume = 0.2;
     sons.play()
   }
   else {
+    soundSetting = false;
+    document.getElementById("sound").innerHTML = "<img src=\"src/s_off.png\" alt=\"\" />";
     awin.volume = 0;
     throws.volume = 0;
     clicks.volume = 0;
     wins.volume = 0;
-    soundSetting = false;
-    document.getElementById("sound").innerHTML = "<img src=\"src/s_off.png\" alt=\"\" />";
-    backgroundMusic.volume = 0;
   }
 }
-
+//Wyłączanie/Włączanie muzyki
+function Music()
+{
+  if (musicSetting == false) {
+    musicSetting = true;
+    document.getElementById("music").innerHTML = "<img src =\"src/music.png\" alt=\"\" />";
+    backgroundMusic.volume = 0.2;
+  }
+  else{
+    musicSetting = false;
+  document.getElementById("music").innerHTML = "<img src =\"src/musicoff.png\" alt=\"\" />";
+  backgroundMusic.volume = 0;
+  }
+}
 //Wyświetlanie aktualnego gracza
 function Players(nr) {
   let text = "";

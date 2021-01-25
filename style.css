@@ -38,10 +38,11 @@ p#logo {
 	line-height: 46px;
 	vertical-align: middle;
 }
-#sound {
+.sound img {
 	cursor: pointer;
 	display: inline-block;
 	margin: 0;
+	height: 29px;
 }
 #play {
 	display: block;
