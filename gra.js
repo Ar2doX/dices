@@ -330,6 +330,7 @@ function Win() {
   let rankingPoints = [];
   let rankingNames = Array(4);
   var result = SortRanking();
+  backgroundMusic.stop();
   document.getElementById("container2").innerHTML = '<div id="win"></div>';
   document.getElementById("box2").style.display = "none";
   document.getElementById("win").innerHTML = '<p id="winner">  Wygrałeś graczu: ' + playerNicknames[result[0]] + ' zdobywajac punktów: ' + points[result[0]] + '</p><img class="trail" src="src/nyan-trail.gif"><img class="cat" src="src/nyan-cat.gif">'
