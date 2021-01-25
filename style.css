@@ -1,3 +1,4 @@
+html {height:100%}
 body {
 	background-color: #000;
 	color: lightgray;
@@ -6,9 +7,12 @@ body {
 	font-weight: 700;
 	margin: 0 !important;
 	text-align: center;
+	height: 100%;
 }
 #box1 {
 	display: inline-block;
+	position: relative;
+	min-height: 330px !important;
 }
 #box2 {
 	display: none;
@@ -135,7 +139,7 @@ input {
 		top: 57%;
 }
 #footer {
-	position: absolute;
+	position: fixed;
 	bottom: 9px;
 	left: 50%;
 	transform: translateX(-50%);
