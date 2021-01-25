@@ -233,17 +233,22 @@ function Same(expected) {
   for (let i = 0; i < 5; i++) {
     let count = 0;
     if (leaver == true) {
-      for (let j = i; j < 5; j++) {
-        if (pvalue[i] == pvalue[j]) { count++; }
+      if(pvalue[i]!=0){
+        var container=pvalue[i];
+        }
+      for (let j = 0; j < 5; j++) {
+        if (container == pvalue[j]) {pvalue[j]=0; count++; }
         if (count == expected) { leaver = false; }
       }
       if (count == 3) { three = true; }
       else if (count == 2) { two = true; }
-      if (count >= expected) { return Sum(); }
+      if (count >= expected) { return Sum(k); }
     }
   }
   if (two == true && three == true && expected == 10) { return 25; }
+
   else { return 0; }
+
 }
 
 //Resetowanie rundy
