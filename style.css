@@ -27,6 +27,13 @@ body {
 #container1 span {
 	vertical-align: middle;
 }
+.imges {
+	font-size: 18px;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+}
+.imges img {margin: 5px !important;}
 img#logo {
 	height: 60px;
 	vertical-align: middle;
