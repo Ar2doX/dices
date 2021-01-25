@@ -242,7 +242,7 @@ function Same(expected) {
       }
       if (count == 3) { three = true; }
       else if (count == 2) { two = true; }
-      if (count >= expected) { return Sum(k); }
+      if (count >= expected) { return Sum(); }
     }
   }
   if (two == true && three == true && expected == 10) { return 25; }
