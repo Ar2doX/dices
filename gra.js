@@ -254,7 +254,7 @@ function Same(expected) {
 //Resetowanie rundy
 function Reset() {
   alert("Suma Twoich punktów: " + points[playerNumber]);
-  if (playerNumber + 1 == playerCounter && round == 1) { Win(); }
+  if (playerNumber + 1 == playerCounter && round == 13) { Win(); }
   else {
     pvalue.fill(0, 0, 5);
     throwCounter = 0;
