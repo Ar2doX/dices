@@ -1,5 +1,5 @@
 //Deklaracja potrzebnych zmiennych
-var soundSetting = "on";
+var soundSetting = true;
 var playerCounter = 2;
 var playerNicknames = [];
 var round = 1;
@@ -43,16 +43,22 @@ else
 backgroundMusic.play();
 //Przełącznik dźwięku
 function Sound() {
-  if (soundSetting == "off") {
-    soundSetting = "on";
+  if (soundSetting == false) {
+    soundSetting = true;
     document.getElementById("sound").innerHTML = "<img src=\"src/s_on.png\" alt=\"\" />";
     awin.volume = 0.2;
-    sons.play()
+    throws.volume = 0.5;
+    clicks.volume = 1;
+    wins.volume = 1;
     backgroundMusic.volume = 0.2;
+    sons.play()
   }
   else {
     awin.volume = 0;
-    soundSetting = "off";
+    throws.volume = 0;
+    clicks.volume = 0;
+    wins.volume = 0;
+    soundSetting = false;
     document.getElementById("sound").innerHTML = "<img src=\"src/s_off.png\" alt=\"\" />";
     backgroundMusic.volume = 0;
   }
@@ -126,9 +132,7 @@ function ThrowingDice() {
       document.getElementById("skip").innerHTML += '<p onclick="SkipMyTurn()">Pomiń</p>';
     }
     if (is > 0) {
-      if (soundSetting == "on") {
       throws.play();
-      }
       throwCounter++;
       document.getElementById("dices").innerHTML = text;
 
@@ -155,9 +159,7 @@ function ThrowingDice() {
 //Zachowanie kości do gry
 function Uclicks(nr) {
   document.getElementById("dice" + [nr]).classList.toggle("click");
-  if (soundSetting == "on") {
   clicks.play();
-  }
   if (pvalue[[nr]] < 7) {
     pvalue[[nr]] += 10
   } else {
@@ -324,8 +326,6 @@ function Win() {
   if (playerCounter == 3 || playerCounter ==4) {
     document.getElementById("win").innerHTML += '<p id="third"> 3. Miejsce: ' + playerNicknames[result[2]] + ' - ' + points[result[2]] + ' </p>';
   }
-  if (soundSetting == "on") {
     wins.play();
     setTimeout(() => { awin.play(); }, 1600);
-  }
 }
