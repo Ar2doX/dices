@@ -40,7 +40,6 @@ else
       this.play();
   }, false);
 }
-backgroundMusic.play();
 //Przełącznik dźwięku
 function Sound() {
   if (soundSetting == false) {
@@ -88,7 +87,7 @@ function Start() {
   document.getElementById("play").classList.toggle('animate__zoomOut');
   setTimeout(() => { document.getElementById("play").style.display = "none"; document.getElementById("box2").style.display = "inline-block"; document.getElementById("box1").style.width = "79vw"; document.getElementById("box2").style.width = "20vw"; RoundStart(0); }, 400);
   Scoreboard();
-
+  backgroundMusic.play();
 }
 //Tablica wyników
 function Scoreboard()
