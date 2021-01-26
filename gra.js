@@ -292,7 +292,6 @@ function Same(expected) {
         }
       for (let j = 0; j < 5; j++) {
         if (container == pvalue[j]) {pvalue[j]=0; count++; }
-        else if (container == pvalue[j]) {pvalue[j]=0; count++; }
         if (count == expected) { leaver = false; }
       }
       if (count == 3) { three = true; }
