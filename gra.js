@@ -266,6 +266,7 @@ function Strike(inc, expected) {
   Decreasing();
   for (let i = 0; i < 4; i++) {
     if ((pvalue[i] + inc) == pvalue[i + 1]) { count++; }
+    else if (i != 0) { break; }
   }
   if (count >= expected) {
     if (expected == 4 && inc == 0) { return 50; }
