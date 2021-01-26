@@ -218,7 +218,7 @@ function chooseCategory(nr) {
       if (isCategoryUsed[[playerNumber]][[nr]] == true) { points[[playerNumber]] += Strike(0, 4); isCategoryUsed[[playerNumber]][[nr]] = false; Reset(); }
       break;
     case 12:
-      if (isCategoryUsed[[playerNumber]][[nr]] == true) {
+      if (isCategoryUsed[[playerNumber]][[nr]] == true) { Decreasing();
                 points[[playerNumber]] += pvalue.reduce((a, b) => a + b, 0); isCategoryUsed[[playerNumber]][[nr]] = false; Reset(); }
       break;
 
@@ -266,6 +266,7 @@ function Strike(inc, expected) {
   Decreasing();
   for (let i = 0; i < 4; i++) {
     if ((pvalue[i] + inc) == pvalue[i + 1]) { count++; }
+    else if (i != 0) { break; }
   }
   if (count >= expected) {
     if (expected == 4 && inc == 0) { return 50; }
@@ -292,7 +293,6 @@ function Same(expected) {
         }
       for (let j = 0; j < 5; j++) {
         if (container == pvalue[j]) {pvalue[j]=0; count++; }
-        else if (container == pvalue[j]) {pvalue[j]=0; count++; }
         if (count == expected) { leaver = false; }
       }
       if (count == 3) { three = true; }
